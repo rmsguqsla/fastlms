@@ -8,7 +8,10 @@ import com.zerobase.fastlms.course.service.TakeCourseService;
 import com.zerobase.fastlms.member.model.MemberInput;
 import com.zerobase.fastlms.member.model.ResetPasswordInput;
 import com.zerobase.fastlms.member.service.MemberService;
+import com.zerobase.fastlms.util.PasswordUtils;
+import com.zerobase.fastlms.util.RequestUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class MemberController {
@@ -175,5 +179,30 @@ public class MemberController {
         model.addAttribute("result", result);
 
         return "member/reset_password_result";
+    }
+
+    @GetMapping("/member/withdraw")
+    public String memberWithdraw() {
+
+        return "member/withdraw";
+    }
+
+    @PostMapping("/member/withdraw")
+    public String memberWithdrawSubmit(Model model,
+                                       MemberInput parameter,
+                                       Principal principal) {
+
+        String userId = principal.getName();
+
+        ServiceResult result = memberService.withdraw(userId, parameter.getPassword());
+
+        if (!result.isResult()) {
+            model.addAttribute("message", result.getMessage());
+            return "common/error";
+        }
+
+
+
+        return "redirect:/member/logout";
     }
 }

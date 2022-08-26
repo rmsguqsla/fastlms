@@ -43,6 +43,9 @@ public class CourseDto {
 
     LocalDateTime udtDt;
 
+    String filename;
+    String urlfilename;
+
     // 추가컬럼
     long totalCount;
     long seq;
@@ -61,6 +64,8 @@ public class CourseDto {
                 .saleEndDt(course.getSaleEndDt())
                 .regDt(course.getRegDt())
                 .udtDt(course.getUdtDt())
+                .filename(course.getFilename())
+                .urlfilename(course.getUrlFilename())
                 .build();
     }
 

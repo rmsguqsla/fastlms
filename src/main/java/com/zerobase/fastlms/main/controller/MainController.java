@@ -1,18 +1,45 @@
 package com.zerobase.fastlms.main.controller;
 
 import com.zerobase.fastlms.components.MailComponents;
+import com.zerobase.fastlms.member.model.LoginHistoryInput;
+import com.zerobase.fastlms.member.service.MemberService;
+import com.zerobase.fastlms.util.RequestUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class MainController {
-
-    private final MailComponents mailComponents;
+    private final MemberService memberService;
 
     @RequestMapping("/")
-    public String index() {
+    public String index(HttpServletRequest request, HttpSession session) {
+
+        String userId = (String) session.getAttribute("userId");
+        if (userId != null) {
+            LocalDateTime loginDt = LocalDateTime.now();
+            String userAgent = RequestUtils.getUserAgent(request);
+            String clientIp = RequestUtils.getClientIp(request);
+
+            LoginHistoryInput parameter = LoginHistoryInput.builder()
+                                            .userId(userId)
+                                            .loginDt(loginDt)
+                                            .userAgent(userAgent)
+                                            .clientIp(clientIp)
+                                            .build();
+
+            memberService.loginHistory(parameter);
+
+            session.removeAttribute("userId");
+        }
         return "index";
     }
 

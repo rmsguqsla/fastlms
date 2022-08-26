@@ -46,7 +46,12 @@ public interface CourseService {
     CourseDto frontDetail(long id);
 
     /**
-     * 수강신
+     * 수강신청
      */
     ServiceResult req(TakeCourseInput parameter);
+
+    /**
+     * 전체 강좌 목록
+     */
+    List<CourseDto> listAll();
 }

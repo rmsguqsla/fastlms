@@ -64,6 +64,10 @@
         </div>
 
         <div>
+            <img th:src="${detail.urlfilename}"/>
+        </div>
+
+        <div>
             <form id="submitForm" method="post">
                 <input type="hidden" name="id" th:value="${detail.id}"/>
                 <button type="submit">수강신청</button>

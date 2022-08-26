@@ -29,6 +29,8 @@ public class MemberDto {
     String addr;
     String addrDetail;
 
+    LocalDateTime loginDt;
+
     // 추가컬럼
     long totalCount;
     long seq;
@@ -61,5 +63,10 @@ public class MemberDto {
     public String getUdtDtTest() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm");
         return udtDt != null ? udtDt.format(formatter) : "";
+    }
+
+    public String getLoginDtText() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm");
+        return loginDt != null ? loginDt.format(formatter) : "";
     }
 }

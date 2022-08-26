@@ -1,5 +1,6 @@
 package com.zerobase.fastlms.admin.controller;
 
+import com.zerobase.fastlms.admin.dto.LoginHistoryDto;
 import com.zerobase.fastlms.admin.dto.MemberDto;
 import com.zerobase.fastlms.admin.model.MemberParam;
 import com.zerobase.fastlms.admin.model.MemberInput;
@@ -48,9 +49,11 @@ public class AdminMemberController extends BaseController {
 
         parameter.init();
 
-
         MemberDto member = memberService.detail(parameter.getUserId());
+        List<LoginHistoryDto> loginHistoryList = memberService.loginHistoryList(parameter.getUserId());
+
         model.addAttribute("member", member);
+        model.addAttribute("loginHistoryList", loginHistoryList);
 
         return "admin/member/detail";
     }
