@@ -9,40 +9,36 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Data
+@NoArgsConstructor
 @Builder
+@Data
+@Entity
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    long categoryId;
-
-    String imagePath;
-
-    String keyword;
-
-    String subject;
-
+    
+    private long categoryId;
+    
+    private String imagePath;
+    private String keyword;
+    private String subject;
+    
     @Column(length = 1000)
-    String summary;
-
+    private String summary;
+    
     @Lob
-    String contents;
+    private String contents;
+    private long price;
+    private long salePrice;
+    private LocalDate saleEndDt;
 
-    long price;
+    private LocalDateTime regDt;//등록일(추가날짜)
+    private LocalDateTime udtDt;//수정일(수정날짜)
 
-    long salePrice;
 
-    LocalDate saleEndDt;
-
-    LocalDateTime regDt;
-
-    LocalDateTime udtDt;
-
-    String filename;
-    String urlFilename;
+    private String filename;
+    private String urlFilename;
+    
 }
